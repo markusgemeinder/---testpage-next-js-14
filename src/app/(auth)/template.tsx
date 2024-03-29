@@ -1,7 +1,10 @@
+//file was renamed from layout.tsx to template.tsx (see /public/next-js-14-tutorial-22-template-vs-layout.png)
+
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import './styles.css';
+import { useState } from 'react';
 
 const navLinks = [
   { name: 'Register', href: '/register' },
@@ -11,8 +14,13 @@ const navLinks = [
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [input, setInput] = useState('');
+
   return (
     <div>
+      <div>
+        <input value={input} onChange={(e) => setInput(e.target.value)} />
+      </div>
       {navLinks.map((link) => {
         const isActive = pathname.startsWith(link.href);
         return (
