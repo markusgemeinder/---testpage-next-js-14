@@ -15,11 +15,23 @@ const navLinks = [
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [input, setInput] = useState('');
+  const [charsLeftText, setCharsLeftText] = useState('');
+
+  function handleInput(event) {
+    event.preventDefault();
+
+    const maxInputLength = 150;
+    const charsLeft = maxInputLength - event.target.value.length;
+    const noteText = `${charsLeft}/${maxInputLength} characters left`;
+    setInput(event.target.value);
+    setCharsLeftText(noteText);
+  }
 
   return (
     <div>
       <div>
-        <input value={input} onChange={(e) => setInput(e.target.value)} />
+        <input value={input} onChange={handleInput} />
+        <p>{charsLeftText}</p>
       </div>
       {navLinks.map((link) => {
         const isActive = pathname.startsWith(link.href);
